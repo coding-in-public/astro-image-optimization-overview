@@ -1,5 +1,8 @@
 ---
+import { Image, Picture, getImage } from "astro:assets";
+import srcImage from "../assets/src.jpg";
 
+const optimizedBackground = await getImage({ src: srcImage, format: "webp" });
 ---
 
 <html lang="en">
@@ -10,5 +13,26 @@
     <meta name="generator" content={Astro.generator} />
     <title>Astro Image Optimization</title>
   </head>
-  <body></body>
+  <body style={`background-image: url(${optimizedBackground.src});`}>
+    <!-- public -->
+    <!-- <img src="/public.jpg" />
+    <Image src="/public.jpg" alt="" width={480} height={270} /> -->
+
+    <!-- src -->
+    <!-- <img src={srcImage.src} /> -->
+    <Picture
+      src={srcImage}
+      alt=""
+      width={480}
+      height={270}
+      formats={["avif", "webp", "jpg"]}
+      fallbackFormat="jpg"
+    />
+
+    <!-- remote -->
+    <!-- <img src={"https://i.imgur.com/sh7TTZ8.jpeg"} />
+    <Image src={"https://i.imgur.com/sh7TTZ8.jpeg"} alt="" inferSize={true} /> -->
+
+    <!-- <Picture /> -->
+  </body>
 </html>
